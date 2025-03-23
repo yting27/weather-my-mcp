@@ -53,7 +53,7 @@ Add the following into `claude_desktop_config.json` file. For more information, 
             "command": "uv",
             "args": [
                 "--directory",
-                "weather-server",
+                "weather-my-mcp",
                 "run",
                 "weather.py"
             ]
