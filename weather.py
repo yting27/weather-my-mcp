@@ -48,18 +48,18 @@ async def get_warning(datetime_start: str = None, datetime_end: str = None) -> s
     """Retrieve general weather warnings issued within a specified date range.
 
     Args:
-        datetime_start: The earliest timestamp in the form of <YYYY-MM-DD HH:MM:SS> (inclusive) from which to retrieve weather warnings. If omitted, defaults to the current date.
-        datetime_end: The latest timestamp in the form of <YYYY-MM-DD HH:MM:SS> (inclusive) to stop retrieving the weather warnings. If omitted, defaults to the current date.
+        datetime_start: The earliest timestamp in the form of <YYYY-MM-DD HH:mm:ss> (inclusive) from which to retrieve weather warnings. If omitted, defaults to the current date.
+        datetime_end: The latest timestamp in the form of <YYYY-MM-DD HH:mm:ss> (inclusive) to stop retrieving the weather warnings. If omitted, defaults to the current date.
     """
     if not datetime_start:
         datetime_start = current_date() + " 00:00:01"
     elif not validate_datetime(datetime_start):
-        return "Wrong `datetime_start` format given. Accepted format is 'YYYY-MM-DD'."
+        return "Wrong `datetime_start` format given. Accepted format is 'YYYY-MM-DD HH:mm:ss'."
 
     if not datetime_end:
         datetime_end = current_date() + " 23:59:59"
     elif not validate_datetime(datetime_end):
-        return "Wrong `datetime_end` format given. Accepted format is 'YYYY-MM-DD'."
+        return "Wrong `datetime_end` format given. Accepted format is 'YYYY-MM-DD HH:mm:ss'."
 
     warning_url = f"{GOV_API_BASE}/weather/warning"
     warning_data = await make_api_request(warning_url, {
@@ -116,30 +116,30 @@ async def get_weather_forecast(location_name: str, date_start: str = None, date_
     return "\n---\n".join(forecasts)
 
 @mcp.tool()
-async def get_earthquake_news(location: str, date_start: str = None, date_end: str = None) -> str:
+async def get_earthquake_news(location: str, datetime_start: str = None, datetime_end: str = None) -> str:
     """Fetch earthquake news for a given location within a specified date range.
 
     Args:
         location: Name or identifier of the place where the earthquake(s) occurred.
-        date_start: The earliest date (inclusive) to start searching for earthquake news. If omitted, defaults to the current date.
-        date_end: The latest date (inclusive) to stop searching for earthquake news. If omitted, defaults to the current date.
+        date_start: The earliest timestamp in the form of <YYYY-MM-DD HH:mm:ss> (inclusive) to start searching for earthquake news. If omitted, defaults to the current date.
+        date_end: The latest timestamp in the form of <YYYY-MM-DD HH:mm:ss> (inclusive) to stop searching for earthquake news. If omitted, defaults to the current date.
     """
-    if not date_start:
-        date_start = current_date()
-    elif not validate_date(date_start):
-        return "Wrong `date_start` format given. Accepted format is 'YYYY-MM-DD'."
+    if not datetime_start:
+        datetime_start = current_date() + " 00:00:01"
+    elif not validate_datetime(datetime_start):
+        return "Wrong `datetime_start` format given. Accepted format is 'YYYY-MM-DD HH:mm:ss'."
 
-    if not date_end:
-        date_end = current_date()
-    elif not validate_date(date_end):
-        return "Wrong `date_end` format given. Accepted format is 'YYYY-MM-DD'."
+    if not datetime_end:
+        datetime_end = current_date() + " 23:59:59"
+    elif not validate_datetime(datetime_end):
+        return "Wrong `datetime_end` format given. Accepted format is 'YYYY-MM-DD HH:mm:ss'."
 
     earthquake_url = f"{GOV_API_BASE}/weather/warning/earthquake"
     data = await make_api_request(earthquake_url, {
                                     "meta": "true",
                                     "sort": "-utcdatetime",
-                                    "date_start": f"{date_start}@utcdatetime",
-                                    "date_end": f"{date_end}@utcdatetime",
+                                    "timestamp_start": f"{datetime_start}@utcdatetime",
+                                    "timestamp_end": f"{datetime_end}@utcdatetime",
                                     "icontains": f"{location}@location"
                                 })
 
