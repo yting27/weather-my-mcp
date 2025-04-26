@@ -1,8 +1,10 @@
-
 # Weather MCP Server
 
-A basic Model Context Protocol (MCP) server that provides weather information retrieved from Open API of Malaysia's official open data portal.
-This server enables LLMs to get weather forecast, warnings, water level associated with flood, and earthquake reports.
+A basic Model Context Protocol (MCP) server that provides weather information retrieved from Open API of Malaysia's official open data portal. This server enables LLMs to get weather forecast, warnings, water level associated with flood, and earthquake reports.
+
+<a href="https://glama.ai/mcp/servers/@yting27/weather-my-mcp">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/@yting27/weather-my-mcp/badge" alt="Weather MY MCP server" />
+</a>
 
 API Documentation: [data.gov.my](https://developer.data.gov.my/)
 
