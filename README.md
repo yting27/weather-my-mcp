@@ -46,6 +46,8 @@ API Documentation: [data.gov.my](https://developer.data.gov.my/)
 
 Add the following into `claude_desktop_config.json` file. For more information, refer to [For Claude Desktop Users](https://modelcontextprotocol.io/quickstart/user).
 
+### Using `uv`
+
 ```json
 {
     "mcpServers": {
@@ -61,6 +63,32 @@ Add the following into `claude_desktop_config.json` file. For more information, 
     }
 }
 ```
+
+### Using Docker
+
+1. Create docker image
+
+    ```bash
+    docker build . --tag weather-my-mcp
+    ```
+
+2. Edit `claude_desktop_config.json` file as follows:
+
+    ```json
+    {
+        "mcpServers": {
+            "weather": {
+                "command": "docker",
+                "args": [
+                    "run",
+                    "-i",
+                    "--rm",
+                    "weather-my-mcp"
+                ]
+            }
+        }
+    }
+    ```
 
 ## License
 
